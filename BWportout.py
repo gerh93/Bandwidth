@@ -22,7 +22,7 @@ log = logging.getLogger(__name__)
 class BandwidthAPI(object):
     def __init__(self, user, password):
         self.user = user
-        self.password = password
+        self.pass = password
         
 
     def TN_query(self, phone_number):
@@ -51,7 +51,7 @@ class BandwidthAPI(object):
         raise NotImplemented
 
     def _call(self, path, **kwargs):
-        req = requests.get(BASE_URL, auth=(self.user, self.password)) 
+        req = requests.get(BASE_URL, auth=(user, password)) 
         json_response = bf.data(fromstring(req.text))        
 
         log.debug() ('Raw response:\n' + req.text +  '\n\n')
@@ -82,7 +82,7 @@ if __name__ == '__main__':
    env.read_envfile()
    parser = argparse.ArgumentParser('bandwidth', description=__doc__)
    parser.add_argument('phone_number', metavar='phone_number', type=str, nargs='+')
-   parser.add_argument('--verbose', '-v', dest='verbose', action='store_true', default=False) 
+   parser.add_argument('--verbose', '-v', dest='verbose', type=bool, const=True, nargs='?', default=False)) 
    parser.add_argument('--user', '-u', dest='user', required=True,
                         help='The initial authorization.')
    parser.add_argument('--password', '-u', dest='password', required=True,
